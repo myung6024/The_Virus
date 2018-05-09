@@ -39,9 +39,9 @@ public class Dropable : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
             temp = d.GetComponentInChildren<Transform>().Find("Image");
             picture = temp.GetComponent<Image>().sprite;
             Blockdata reciever = GameObject.Find("a_block").GetComponent<Blockdata>();
-            //reciever.Recieve();
-            //Destroy(d.gameObject);
-            //Destroy(d.placeholder);
+            reciever.Recieve();
+            Destroy(d.gameObject);
+            Destroy(d.placeholder);
             // Debug.Log(picture.name);
 
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Blockdata : MonoBehaviour {
 
     public Blockmanager bMar;    // 블럭 매니저에 접근하기 위한 변수
-    public SpriteRenderer MyBlockImg;  //현재 블록의 이미지
+    //private SpriteRenderer MyBlockImg;  //현재 블록의 이미지
 
     public int iX, iY;   //블럭 위치
     public int iType;    //블럭 종류
@@ -18,35 +18,38 @@ public class Blockdata : MonoBehaviour {
     public void Recieve()
     {
 
-        //Temp = temp.GetComponent<Image>().sprite;
-        //debug_blockname = Temp.name;
-        //WithdrawCard Block = GameObject.Find("SceneManager").GetComponent<WithdrawCard>();
-        //Block_name=Block.Temp.name;
         Dropable Block = GameObject.Find("Deck").GetComponent<Dropable>();
         Block_name = Block.picture.name;
+        //Debug.Log(Block_name);
         // MyBlockImg = GetComponent<SpriteRenderer>();
         // bMar = GameObject.Find("Blockmanager").GetComponent<Blockmanager>();
+        
+        Blockmanager temp = GameObject.Find("BlockManager").GetComponent<Blockmanager>();
+        temp.CreateAdBlock(Block_name);
+        /*
         if (Block_name == "A")
         {
-            print("a");
+            print("A");
+            //Blockmanager.CreateAdBlock(Block_name);
         }
         if (Block_name == "B")
         {
-            print("b");
+            //Blockmanager.CreateAdBlock(a);
         }
         if (Block_name == "C")
         {
-            print("c");
+            print("e");
         }
         if (Block_name == "D")
         {
-            print("d");
+            print("e");
         }
         if (Block_name == "E")
         {
             print("e");
-        }
+        }*/
 
     }
-    public void SetBlockImg(Sprite _sprite) { MyBlockImg.sprite = _sprite; }
+    public void SetBlockImg(Sprite _sprite) {
+        gameObject.GetComponent<SpriteRenderer>().sprite = _sprite;}
 }
