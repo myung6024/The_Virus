@@ -53,7 +53,9 @@ public class blockmouse : MonoBehaviour {
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
         this.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
-        
+        //Blockmanager gMar = GameObject.Find("BlockManager").GetComponent<Blockmanager>();
+        //gMar.a_block.transform.position = mousePosition;
+      
     }
 
 }
