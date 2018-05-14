@@ -6,6 +6,7 @@ public class Blockmanager : MonoBehaviour
 {
 
     public GameObject OriginBlock;
+    public GameObject Block;
 
     public Sprite[] BlockType;
 
@@ -15,6 +16,7 @@ public class Blockmanager : MonoBehaviour
 
     void Awake()
     {
+        
         BlockBoard = new int[iBlockX][];
         for (int i = 0; i < iBlockX; i++)
         {
@@ -26,7 +28,7 @@ public class Blockmanager : MonoBehaviour
 
     public void CreateAdBlock(string name)
     {
-        
+        Block = GameObject.Find("Block");
         if (name == "A")
         {
             Debug.Log("나는 에이다");
@@ -35,7 +37,7 @@ public class Blockmanager : MonoBehaviour
                 //Debug.Log(x);
                // Debug.Log("OriginBlock:" + OriginBlock.transform.localPosition.x);
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x + x, 0, 0), Quaternion.identity);
-                a_block.transform.SetParent(transform);
+                a_block.transform.SetParent(Block.transform);
                 //Debug.Log("x:" + a_block.transform.position.x);
 
                 int iType = Random.Range(0, BlockType.Length);
@@ -52,7 +54,7 @@ public class Blockmanager : MonoBehaviour
             {
                 //Debug.Log(y);
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x, OriginBlock.transform.position.y + y, 0), Quaternion.identity);
-                a_block.transform.SetParent(transform);
+                a_block.transform.SetParent(Block.transform);
                 //Debug.Log("y:"+a_block.transform.position.y);
 
                 int iType = Random.Range(0, BlockType.Length);

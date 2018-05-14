@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class blockmouse : MonoBehaviour {
 
-  
-    private void Start()
-    {
-    }
+
 
     void OnMouseDown()
     {
@@ -18,7 +15,7 @@ public class blockmouse : MonoBehaviour {
     }
     void OnMouseUp()
     {
-
+        GameObject block = GameObject.Find("Block");
         BlockGameManager gMar = GameObject.Find("GameManager").GetComponent<BlockGameManager>();
         block sBlock = gMar.OriginBlock.GetComponent<block>();
         bool flag = false;
@@ -27,9 +24,9 @@ public class blockmouse : MonoBehaviour {
         {
             for (sBlock.iX = 0; sBlock.iX < gMar.iBlockX; sBlock.iX++)
             {
-                if (this.transform.position.x < sBlock.iX + 0.5 && this.transform.position.y < sBlock.iY + 0.5) //블럭보드칸이랑 가까운데에 위치
+                if (block.transform.position.x < sBlock.iX + 0.5 && block.transform.position.y < sBlock.iY + 0.5) //블럭보드칸이랑 가까운데에 위치
                 {
-                    this.transform.localPosition = new Vector3(sBlock.iX, sBlock.iY, 10);// 블럭 놓았을 때 블럭보드칸 위치로
+                    block.transform.localPosition = new Vector3(sBlock.iX, sBlock.iY, 10);// 블럭 놓았을 때 블럭보드칸 위치로
                     gMar.fill = 1;                                                       // 블럭 판이 채워짐
                     flag = true;
                     //print(gMar.fill);
@@ -44,18 +41,23 @@ public class blockmouse : MonoBehaviour {
             {
                 break;
             }
-            //print(gMar.fill);
+            
         }
 
     }
 
     void OnMouseDrag()
     {
+        GameObject block = GameObject.Find("Block");
+
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
-        this.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+        block.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+        //canvas.transform.position = mousePosition;
+        
+        
         //Blockmanager gMar = GameObject.Find("BlockManager").GetComponent<Blockmanager>();
         //gMar.a_block.transform.position = mousePosition;
-      
+
     }
 
 }
