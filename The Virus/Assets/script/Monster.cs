@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour {
     private int nowHp = 100;
     private int resist = 100;
     public Sprite[] monImage;
+    private characteristic monCha = characteristic.NULL;
     private state monState = state.NULL;
 
     enum state
@@ -19,6 +20,12 @@ public class Monster : MonoBehaviour {
         NULL,
         SLOW,
         STUN
+    }
+
+    public enum characteristic
+    {
+        NULL,
+        SLOW
     }
 
     // Use this for initialization
@@ -29,11 +36,12 @@ public class Monster : MonoBehaviour {
         StartCoroutine(moved());
     }
 
-    public void setState(int monNum, float speed, int hp, int resist)
+    public void setState(int monNum, float speed, int hp, int resist, characteristic cha)
     {
         moveSpeed = speed;
         this.hp = hp;
         nowHp = hp;
+        monCha = cha;
         this.resist = resist;
         GetComponent<Image>().sprite = monImage[monNum];
     }
@@ -54,7 +62,8 @@ public class Monster : MonoBehaviour {
         }
         if (collision.transform.tag == "icebullet")
         {
-            StartCoroutine(slow());
+            if(monCha != characteristic.SLOW)
+                StartCoroutine(slow());
             nowHp -= 10;
             transform.Find("Hpbar").GetComponent<Image>().fillAmount = (float)nowHp / (float)hp;
             collision.gameObject.SetActive(false);
@@ -85,6 +94,12 @@ public class Monster : MonoBehaviour {
         {
             Debug.Log("부딪침");
             setMoveRoate = new Vector3(0, -1, 0);
+        }
+        if (collision.transform.tag == "final")
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().damageTohp();
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
         }
 
     }

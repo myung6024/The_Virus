@@ -107,6 +107,7 @@ MonoBehaviour:
   monImage:
   - {fileID: 21300000, guid: fafc0e86e7c62104b91ceb96eac7c18f, type: 3}
   - {fileID: 21300000, guid: 57d201975afee27439ca15a7b6ba6771, type: 3}
+  - {fileID: 21300000, guid: 4cdd75acbd8be594ab99df40d9e51c04, type: 3}
 --- !u!114 &114283961920107256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,11 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -150,11 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color:
-    r: 1
-    g: 0
-    b: 0
-    a: 1
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
