@@ -74,6 +74,25 @@ public class Monster : MonoBehaviour {
             }
 
         }
+        if (collision.transform.tag == "bombbullet")
+        {
+            print("boom");
+            collision.gameObject.SetActive(false);
+            //StartCoroutine(boom());
+            GameObject.Find("GameManager").GetComponent<GameManager>().boomEffect(transform.localPosition);
+        }
+
+        if (collision.transform.tag == "boom")
+        {
+            nowHp -= 30;
+            transform.Find("Hpbar").GetComponent<Image>().fillAmount = (float)nowHp / (float)hp;
+            //collision.gameObject.SetActive(false);
+            if (nowHp <= 0)
+            {
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
+            }
+        }
 
         if (collision.transform.tag == "righttile")
         {
