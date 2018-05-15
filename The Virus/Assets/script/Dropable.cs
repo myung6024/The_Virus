@@ -8,6 +8,7 @@ public class Dropable : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     public Sprite picture;
     public Transform temp;
+    public Dragable card_to_block;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -36,8 +37,9 @@ public class Dropable : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         }
         if(gameObject.name=="Deck")
         {
-            temp = d.GetComponentInChildren<Transform>().Find("Image");
-            picture = temp.GetComponent<Image>().sprite;
+            //temp = d.GetComponentInChildren<Transform>().Find("Image");
+            //picture = temp.GetComponent<Image>().sprite;
+            card_to_block = d;
             Blockdata reciever = GameObject.Find("a_block").GetComponent<Blockdata>();
             reciever.Recieve();
             Destroy(d.gameObject);

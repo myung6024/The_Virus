@@ -620,6 +620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 0}
   temp: {fileID: 0}
+  card_to_block: {fileID: 0}
 --- !u!212 &1403710191
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -773,11 +774,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c347262372f259b4ea78733c7f7fa09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardPrefab: {fileID: 1671289062300786, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
+  CardPrefab: {fileID: 1963635298797216, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
   Parent: {fileID: 1346658043}
-  Strength: {fileID: 1118185634379964, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
-  Resistance: {fileID: 1179982261853424, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
-  image: {fileID: 1230370182453692, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
+  Strength: {fileID: 1952582019844168, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
+  Resistance: {fileID: 1564934826536048, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
+  image: {fileID: 1139373174062174, guid: 5ab4b9717451ec84da00c11e990d7cd6, type: 2}
   Card_Image_Array:
   - {fileID: 21300000, guid: 52b81a57742b46d49857a5a2d9b9b521, type: 3}
   - {fileID: 21300000, guid: db43aa0c0bfd25d4d80fed318d2c0f90, type: 3}
@@ -1028,6 +1029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 0}
   temp: {fileID: 0}
+  card_to_block: {fileID: 0}
 --- !u!1001 &1768026188
 Prefab:
   m_ObjectHideFlags: 0
