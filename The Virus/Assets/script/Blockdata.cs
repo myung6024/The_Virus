@@ -56,5 +56,5 @@ public class Blockdata : MonoBehaviour {
 
     }
     public void SetBlockImg(Sprite _sprite) {
-        gameObject.GetComponent<SpriteRenderer>().sprite = _sprite;}
+        gameObject.GetComponent<Image>().sprite = _sprite;}
 }

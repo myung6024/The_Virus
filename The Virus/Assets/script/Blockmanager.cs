@@ -27,7 +27,7 @@ public class Blockmanager : MonoBehaviour
 
     public void CreateAdBlock(string name)     //다른 모양의 block prefab을 생성하는 함수
     {
-        Block = GameObject.Find("Block");
+        //Block = GameObject.Find("Block");
         if (name == "A")
         {
             Debug.Log("나는 에이다");
@@ -35,8 +35,11 @@ public class Blockmanager : MonoBehaviour
             {
                 //Debug.Log(x);
                // Debug.Log("OriginBlock:" + OriginBlock.transform.localPosition.x);
-                GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x + x, 0, 0), Quaternion.identity);
+                GameObject a_block = Instantiate(OriginBlock, new Vector3(Block.transform.localPosition.x + x, Block.transform.localPosition.y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x + (x*50), Block.transform.localPosition.y, 0);
+                
                 //Debug.Log("x:" + a_block.transform.position.x);
 
                 int iType = Random.Range(0, BlockType.Length);
@@ -52,8 +55,10 @@ public class Blockmanager : MonoBehaviour
             for (int y = 1; y < 2; y++)
             {
                 //Debug.Log(y);
-                GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x, OriginBlock.transform.position.y + y, 0), Quaternion.identity);
+                GameObject a_block = Instantiate(OriginBlock, new Vector3(Block.transform.localPosition.x, Block.transform.localPosition.y + y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x, Block.transform.localPosition.y - (y*50), 0);
                 //Debug.Log("y:"+a_block.transform.position.y);
 
                 int iType = Random.Range(0, BlockType.Length);
@@ -75,8 +80,10 @@ public class Blockmanager : MonoBehaviour
             {
               
                 //Debug.Log("Ori x:"+OriginBlock.transform.position.x);
-                GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x + x, 0, 0), Quaternion.identity);
+                GameObject a_block = Instantiate(OriginBlock, new Vector3(Block.transform.localPosition.x + x, Block.transform.localPosition.y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x + (x * 50), Block.transform.localPosition.y, 0);
                 //Debug.Log("x:" + a_block.transform.position.x);
                 int iType = Random.Range(0, BlockType.Length);
 
@@ -91,8 +98,10 @@ public class Blockmanager : MonoBehaviour
             {
                 Debug.Log(y);
                 //Debug.Log("ori x:"+OriginBlock.transform.position.x);
-                GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x, OriginBlock.transform.position.y + y, 0), Quaternion.identity);
+                GameObject a_block = Instantiate(OriginBlock, new Vector3(Block.transform.localPosition.x , Block.transform.localPosition.y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x, Block.transform.localPosition.y - (y * 50), 0);
                 //Debug.Log("x:" + a_block.transform.position.x);
                 int iType = Random.Range(0, BlockType.Length);
 
@@ -109,12 +118,16 @@ public class Blockmanager : MonoBehaviour
             Debug.Log("나는 씨다");
             for (int x = 1; x < 2; x++)
             {
-                GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x - x, 0, 0), Quaternion.identity);
+                GameObject a_block = Instantiate(OriginBlock, new Vector3(Block.transform.localPosition.x + x, Block.transform.localPosition.y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x + (x * 50), Block.transform.localPosition.y, 0);
 
                 GameObject b_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x + x, 0, 0), Quaternion.identity);
                 b_block.transform.SetParent(Block.transform);
-                
+                b_block.transform.localScale = new Vector3(1, 1, 1);
+                b_block.transform.localPosition = new Vector3(Block.transform.localPosition.x - (x * 50), Block.transform.localPosition.y, 0);
+
                 int iType = Random.Range(0, BlockType.Length);
 
                 Blockdata sBlock = a_block.GetComponent<Blockdata>();
@@ -140,10 +153,14 @@ public class Blockmanager : MonoBehaviour
             {
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x - x, 0, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
-               
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x + (x * 50), Block.transform.localPosition.y, 0);
+
                 GameObject b_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x + x, 0, 0), Quaternion.identity);
                 b_block.transform.SetParent(Block.transform);
-                
+                b_block.transform.localScale = new Vector3(1, 1, 1);
+                b_block.transform.localPosition = new Vector3(Block.transform.localPosition.x - (x * 50), Block.transform.localPosition.y, 0);
+
 
                 int iType = Random.Range(0, BlockType.Length);
 
@@ -166,7 +183,9 @@ public class Blockmanager : MonoBehaviour
             {
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x, OriginBlock.transform.position.y+y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
-               
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x, Block.transform.localPosition.y + (y * 50), 0);
+
                 int iType = Random.Range(0, BlockType.Length);
 
                 Blockdata sBlock = a_block.GetComponent<Blockdata>();
@@ -183,6 +202,8 @@ public class Blockmanager : MonoBehaviour
             {
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x, OriginBlock.transform.position.y + y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
+                a_block.transform.localScale = new Vector3(1, 1, 1);
+                a_block.transform.localPosition = new Vector3(Block.transform.localPosition.x, Block.transform.localPosition.y - (y * 50), 0);
 
                 int iType = Random.Range(0, BlockType.Length);
 

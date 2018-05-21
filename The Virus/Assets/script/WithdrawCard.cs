@@ -44,6 +44,7 @@ public class WithdrawCard : MonoBehaviour {
         image.GetComponent<Image>().sprite = Card_Image;
         GameObject newCard = Instantiate(CardPrefab);
         newCard.transform.SetParent(Parent.transform);
+        newCard.transform.localScale = new Vector3(1, 1, 1);
         newCard.GetComponentInChildren<Text>().text=Card_Title;
 
         Card_List.Add(newCard);

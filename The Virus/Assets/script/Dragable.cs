@@ -10,12 +10,26 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public Transform placeholderparent = null;
     public GameObject placeholder = null;
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Debug.Log("dwdq");
+        if (collision.transform.tag == "main_block")
+        {
+            Debug.Log("dwdq");
+            Destroy(gameObject);
+            GameObject.Find("a_block").GetComponent<Blockdata>().Recieve();
+            Destroy(placeholder);
+
+        }
+
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Debug.Log("OnBeginDrag");
         placeholder = new GameObject();
         placeholder.transform.SetParent(this.transform.parent);
+        placeholder.transform.localScale = new Vector3(1,1,1);
         LayoutElement le = placeholder.AddComponent<LayoutElement>();
         le.preferredWidth = this.GetComponent<LayoutElement>().preferredWidth;
         le.preferredHeight = this.GetComponent<LayoutElement>().preferredHeight;
@@ -35,7 +49,8 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         placeholder.transform.SetParent(placeholderparent);
         //Debug.Log("OnDrag");
-        this.transform.position = eventData.position;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
         int temp = placeholderparent.childCount;
         for (int i = 0; i < placeholderparent.childCount; i++)
         {

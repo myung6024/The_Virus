@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-    public Canvas can;
+    public GameObject can;
+    public GameObject mon;
+    public GameObject block;
     public GameObject monster;
     public GameObject tile;
     public GameObject tile_left;
@@ -15,6 +17,17 @@ public class GameManager : MonoBehaviour {
     public GameObject final;
     public Text StageHpText;
     private int stageHp = 15;
+    private Vector3 start_pos;
+
+    private List<int> mons = new List<int>();
+
+    public GameObject OriginBlock;
+    public GameObject mainblock;
+    public Sprite[] BlockType;
+
+    public int iBlockX, iBlockY;    //블럭보드의 가로 세로 크기
+    public GameObject[][] BlockBoard;      //블럭 보드
+    public int fill;                //블럭 보드가 채워짐 여부
 
     public GameObject boomprefab;
 
@@ -23,6 +36,7 @@ public class GameManager : MonoBehaviour {
     enum mapTile{
         none,
         tile,
+        tile_start,
         tile_left,
         tile_right,
         tile_up,
@@ -47,12 +61,20 @@ public class GameManager : MonoBehaviour {
     {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.tower, mapTile.none, mapTile.none, mapTile.none },
     {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none },
     {mapTile.none, mapTile.none, mapTile.none, mapTile.tile_up, mapTile.tile_left, mapTile.none, mapTile.tower3, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.tower2, mapTile.none, mapTile.none, mapTile.none }};
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_start, mapTile.none, mapTile.tower2, mapTile.none, mapTile.none, mapTile.none }};
 	// Use this for initialization
 
 	void Start () {
         mapMaker();
-        makeMonster();
+        //makeMonster();
+
+        BlockBoard = new GameObject[iBlockX][];
+        for (int i = 0; i < iBlockX; i++)
+        {
+            BlockBoard[i] = new GameObject[iBlockY];
+        }
+
+        CreateBlock();
     }
 
     public void damageTohp()
@@ -72,6 +94,7 @@ public class GameManager : MonoBehaviour {
                 else
                 {
                     if (stage1[i, j] == mapTile.tile) { _prefab = tile; }
+                    else if (stage1[i, j] == mapTile.tile_start) { _prefab = tile; }
                     else if (stage1[i, j] == mapTile.tower) { _prefab = tower;}
                     else if (stage1[i, j] == mapTile.tower2) { _prefab = tower; }
                     else if (stage1[i, j] == mapTile.tower3) { _prefab = tower; }
@@ -83,8 +106,10 @@ public class GameManager : MonoBehaviour {
 
                     GameObject prefab = Instantiate(_prefab, new Vector3(0, 0, 0), Quaternion.identity);
                     prefab.transform.parent = can.transform;
-                    prefab.transform.localPosition = new Vector3(150 * j - 520, 600 - 150 * i, 0);
+                    prefab.transform.localPosition = new Vector3(60 * j - 520, 300 - 60 * i, 0);
                     prefab.transform.localScale = new Vector3(1, 1, 1);
+
+                    if (stage1[i, j] == mapTile.tile_start) { start_pos = prefab.transform.localPosition; }
 
                     if (stage1[i, j] == mapTile.tower) { prefab.GetComponent<Tower>().setState(0, 4, 0.1f); }
                     else if (stage1[i, j] == mapTile.tower2) { prefab.GetComponent<Tower>().setState(1, 4, 0.1f); }
@@ -97,31 +122,60 @@ public class GameManager : MonoBehaviour {
 
     void makeMonster()
     {
+        /*
         for (int i = 0; i < 15; i++)
         {
             GameObject prefab = Instantiate(monster, new Vector3(0, 0, 0), Quaternion.identity);
             if (i % 2 == 0)
             {
-                prefab.GetComponent<Monster>().setState(0, 4, 100, 10, Monster.characteristic.NULL);
-                prefab.transform.SetParent(can.transform);
-                prefab.transform.localPosition = new Vector3(150 * 4 - 520, -800 - 150 * i, 0);
+                prefab.GetComponent<Monster>().setState(0, 3, 100, 10, Monster.characteristic.NULL);
+                prefab.transform.SetParent(mon.transform);
+                prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
                 prefab.transform.localScale = new Vector3(1, 1, 1);
             }
             else if (i % 3 == 0)
             {
-                prefab.GetComponent<Monster>().setState(2, 7, 300, 10, Monster.characteristic.SLOW);
-                prefab.transform.SetParent(can.transform);
-                prefab.transform.localPosition = new Vector3(150 * 4 - 520, -800 - 150 * i, 0);
+                prefab.GetComponent<Monster>().setState(2, 5, 300, 10, Monster.characteristic.SLOW);
+                prefab.transform.SetParent(mon.transform);
+                prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
                 prefab.transform.localScale = new Vector3(1, 1, 1);
             }
             else
             {
-                prefab.GetComponent<Monster>().setState(1, 6, 200, 10, Monster.characteristic.NULL);
-                prefab.transform.SetParent(can.transform);
-                prefab.transform.localPosition = new Vector3(150 * 4 - 520, -800 - 150 * i, 0);
+                prefab.GetComponent<Monster>().setState(1, 4, 200, 10, Monster.characteristic.NULL);
+                prefab.transform.SetParent(mon.transform);
+                prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
+                prefab.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }*/
+
+        for(int i=0; i<mons.Count; i++)
+        {
+            GameObject prefab = Instantiate(monster, new Vector3(0, 0, 0), Quaternion.identity);
+            if (mons[i] % 2 == 0)
+            {
+                prefab.GetComponent<Monster>().setState(0, 3, 100, 10, Monster.characteristic.NULL);
+                prefab.transform.SetParent(mon.transform);
+                prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
+                prefab.transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (mons[i] % 3 == 0)
+            {
+                prefab.GetComponent<Monster>().setState(2, 5, 300, 10, Monster.characteristic.SLOW);
+                prefab.transform.SetParent(mon.transform);
+                prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
+                prefab.transform.localScale = new Vector3(1, 1, 1);
+            }
+            else
+            {
+                prefab.GetComponent<Monster>().setState(1, 4, 200, 10, Monster.characteristic.NULL);
+                prefab.transform.SetParent(mon.transform);
+                prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
                 prefab.transform.localScale = new Vector3(1, 1, 1);
             }
         }
+
+        mons.Clear();
         
     }
 
@@ -153,5 +207,79 @@ public class GameManager : MonoBehaviour {
 
         Destroy(Boom);
 
+    }
+
+    //블럭보드 만드는 함수
+    void CreateBlock()
+    {
+        for (int y = 0; y < iBlockY; y++)
+        {
+
+            for (int x = 0; x < iBlockX; x++)
+            {
+
+                BlockBoard[y][x] = Instantiate(OriginBlock, new Vector3(x, y, 0), Quaternion.identity);
+                BlockBoard[y][x].transform.SetParent(block.transform);
+                BlockBoard[y][x].transform.localPosition = new Vector3(220 + x * 50, 220 + y * -50, 1);
+                BlockBoard[y][x].transform.localScale = new Vector3(1, 1, 1);
+
+                int iType = Random.Range(0, BlockType.Length);
+
+                block sBlock = BlockBoard[y][x].GetComponent<block>();
+                sBlock.iX = x;
+                sBlock.iY = y;
+                sBlock.iType = iType;
+                sBlock.SetBlockImg(BlockType[iType]);
+                //BlockBoard[x][y] = iType;
+                fill = 0;
+
+
+            }
+        }
+    }
+
+    public void checkBlock()
+    {
+        for (int y = 0; y < iBlockY; y++)
+        {
+
+            for (int x = 0; x < iBlockX; x++)
+            {
+                if (BlockBoard[x][y].GetComponent<block>().state == 1)
+                {
+                    BlockBoard[x][y].GetComponent<block>().state = 2;
+                    BlockBoard[x][y].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);
+                }
+            }
+        }
+
+        Transform[] childList = mainblock.GetComponentsInChildren<Transform>(true);
+        if (childList != null)
+        {
+            for (int i = 0; i < childList.Length; i++)
+            {
+                if (childList[i] != mainblock.transform)
+                    Destroy(childList[i].gameObject);
+            }
+        }
+    }
+
+    public void GoMonster()
+    {
+        
+        for (int y = 0; y < iBlockY; y++)
+        {
+            for (int x = 0; x < iBlockX; x++)
+            {
+                if (BlockBoard[x][y].GetComponent<block>().state == 2)
+                {
+                    mons.Add(BlockBoard[x][y].GetComponent<block>().state);
+                    //BlockBoard[x][y].GetComponent<block>().state = 2;
+                    //BlockBoard[x][y].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);
+                }
+            }
+        }
+
+        makeMonster();
     }
 }

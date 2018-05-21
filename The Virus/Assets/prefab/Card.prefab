@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224837343000775800}
   - component: {fileID: 222978276300253548}
   - component: {fileID: 114564981020753648}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 224530399844235662}
   - component: {fileID: 222772019462937996}
   - component: {fileID: 114451568132138570}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CardResistance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 224033687683722920}
   - component: {fileID: 222108615538702870}
   - component: {fileID: 114279719149943964}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CardStrength
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,9 @@ GameObject:
   - component: {fileID: 114798483605504760}
   - component: {fileID: 225406163503395782}
   - component: {fileID: 114500127060382470}
-  m_Layer: 5
+  - component: {fileID: 61355492661695850}
+  - component: {fileID: 50368138809526022}
+  m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,13 +94,58 @@ GameObject:
   - component: {fileID: 224674064205415016}
   - component: {fileID: 222514682237623770}
   - component: {fileID: 114049995258803810}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CardTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!50 &50368138809526022
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1963635298797216}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61355492661695850
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1963635298797216}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 120}
+  m_EdgeRadius: 0
 --- !u!114 &114049995258803810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,7 +211,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uCCB4\uB825: 8"
+  m_Text: "\uCCB4\uB825: 1"
 --- !u!114 &114451568132138570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,7 +244,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC800\uD56D\uB825: 5"
+  m_Text: "\uC800\uD56D\uB825: 2"
 --- !u!114 &114500127060382470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,7 +278,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: faa13d3f0ed1f8b4a87208f84254a7d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db43aa0c0bfd25d4d80fed318d2c0f90, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

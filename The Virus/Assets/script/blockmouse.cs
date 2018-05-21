@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class blockmouse : MonoBehaviour {
 
+    private bool onTouch = false; // 터치중인 상태인지
+    private Vector2 prePos; // 움직이기 전의 좌표
+
+    void Awake()
+    {
+        prePos = transform.localPosition; // 좌표 백업
+    }
+
     void OnMouseDown()
     {
-        //print("마우스 다운");
-        BlockGameManager gMar = GameObject.Find("GameManager").GetComponent<BlockGameManager>();
+        Debug.Log("down");
+        onTouch = true;
+        StartCoroutine(DragObject());
+        
+        GameManager gMar = GameObject.Find("GameManager").GetComponent<GameManager>();
         gMar.fill = 0;  //블럭을 옮기려고 집었을 때 그 자리를 초기화
 
     }
     void OnMouseUp()
     {
-        GameObject block = GameObject.Find("Block");
+        onTouch = false;
+        /*GameObject block = GameObject.Find("Block");
         BlockGameManager gMar = GameObject.Find("GameManager").GetComponent<BlockGameManager>();
         block sBlock = gMar.OriginBlock.GetComponent<block>();
         bool flag = false;
@@ -53,11 +65,11 @@ public class blockmouse : MonoBehaviour {
             }
         }
         Debug.Log("x:" + block.transform.position.x);
-        Debug.Log("y:" + block.transform.position.y);
-        
+        Debug.Log("y:" + block.transform.position.y);*/
 
     }
 
+    /*
     void OnMouseDrag()
     {
         GameObject block = GameObject.Find("Block");
@@ -72,6 +84,18 @@ public class blockmouse : MonoBehaviour {
         //Blockmanager gMar = GameObject.Find("BlockManager").GetComponent<Blockmanager>();
         //gMar.a_block.transform.position = mousePosition;
 
+    }*/
+
+    IEnumerator DragObject()
+    {
+        while (onTouch)
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
+            yield return new WaitForSeconds(0.02f);
+        }
+        transform.localPosition = prePos; // 드래그가 끝나면 원래 위치로  
     }
 
 }
