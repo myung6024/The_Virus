@@ -27,10 +27,10 @@ public class Blockmanager : MonoBehaviour
 
     public void CreateAdBlock(string name)     //다른 모양의 block prefab을 생성하는 함수
     {
-        //Block = GameObject.Find("Block");
+        Debug.Log("createad");
         if (name == "A")
         {
-            //Debug.Log("나는 에이다");
+            Debug.Log("나는 에이다");
             for (int x = 1; x < 3; x++)
             {
                 //Debug.Log(x);

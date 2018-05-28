@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
     public GameObject tile_down;
     public GameObject tower;
     public GameObject final;
+    private string Block_name;  //블록 이름 (get)받아오는 변수
+    private Dragable card_received;  //드래그하는 현카드 상태 받아오기
     public Text StageHpText;
     private int stageHp = 15;
     private Vector3 start_pos;
@@ -268,6 +270,30 @@ public class GameManager : MonoBehaviour {
                     Destroy(childList[i].gameObject);
             }
         }
+    }
+
+    //블록 회전
+    public void rotation()
+    {
+        Debug.Log("destroy");
+        
+        
+        //Dropable Card = GameObject.Find("Deck").GetComponent<Dropable>();
+        //card_received = Card.card_to_block;
+        //CardStatus Card_info = card_received.GetComponent<CardStatus>();
+        //Block_name = Card_info.GetName();
+
+        //Destroy(a_block)*/
+        GameObject desObject = GameObject.Find("Canvas/Block/Block/a_block/a_block");
+        
+        if (Block_name == "A")
+        {
+            Debug.Log("destroyA");
+            Destroy(desObject);
+        }
+
+
+
     }
 
     public void GoMonster()

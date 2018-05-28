@@ -5,6 +5,7 @@ using UnityEngine;
 public class CardStatus : MonoBehaviour {
     private int CardHP;
     private int CardResistance;
+    private string CardName;
 
     public void SetHP(int number)
     {
@@ -21,5 +22,13 @@ public class CardStatus : MonoBehaviour {
     public int GetResistance()
     {
         return CardResistance;
+    }
+    public string GetName()     // get,set 블록 종류에 따른 카드 이름도 넣음
+    {
+        return CardName;
+    }
+    public string SetName(string str)
+    {
+        return str;
     }
 }
