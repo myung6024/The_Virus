@@ -15,7 +15,7 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         //Debug.Log("dwdq");
         if (collision.transform.tag == "main_block")
         {
-            Debug.Log("dwdq");
+            //Debug.Log("dwdq");
             Destroy(gameObject);
             GameObject.Find("a_block").GetComponent<Blockdata>().Recieve();
             Destroy(placeholder);

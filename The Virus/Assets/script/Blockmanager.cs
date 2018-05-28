@@ -30,7 +30,7 @@ public class Blockmanager : MonoBehaviour
         //Block = GameObject.Find("Block");
         if (name == "A")
         {
-            Debug.Log("나는 에이다");
+            //Debug.Log("나는 에이다");
             for (int x = 1; x < 3; x++)
             {
                 //Debug.Log(x);
@@ -75,7 +75,7 @@ public class Blockmanager : MonoBehaviour
         }
         else if (name == "B")
         {
-            Debug.Log("나는 비다");
+            //Debug.Log("나는 비다");
             for (int x = 1; x < 2; x++)
             {
               
@@ -96,7 +96,7 @@ public class Blockmanager : MonoBehaviour
             }
             for (int y = 1; y < 2; y++)
             {
-                Debug.Log(y);
+                //Debug.Log(y);
                 //Debug.Log("ori x:"+OriginBlock.transform.position.x);
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(Block.transform.localPosition.x , Block.transform.localPosition.y, 0), Quaternion.identity);
                 a_block.transform.SetParent(Block.transform);
@@ -115,7 +115,7 @@ public class Blockmanager : MonoBehaviour
         }
         else if(name == "C")
         {
-            Debug.Log("나는 씨다");
+            //Debug.Log("나는 씨다");
             for (int x = 1; x < 2; x++)
             {
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(Block.transform.localPosition.x + x, Block.transform.localPosition.y, 0), Quaternion.identity);
@@ -148,7 +148,7 @@ public class Blockmanager : MonoBehaviour
             
         }else if(name == "D")
         {
-            Debug.Log("나는 D다");
+            //Debug.Log("나는 D다");
             for (int x = 1; x < 2; x++)
             {
                 GameObject a_block = Instantiate(OriginBlock, new Vector3(OriginBlock.transform.position.x - x, 0, 0), Quaternion.identity);

@@ -19,6 +19,8 @@ public class WithdrawCard : MonoBehaviour {
     private string[] Card_Strength_Array = { "체력: 2", "체력: 1", "체력: 5", "체력: 6", "체력: 8"};
     private string Card_Strength;
     private string[] Card_Resistance_Array = { "저항력: 1", "저항력: 2", "저항력: 4", "저항력: 7", "저항력: 5" };
+    private int[] HP_Array = { 2,1,5,6,8 };
+    private int[] Resistance_Array = { 1,2,4,7,5 };
     private string Card_Resistance;
 
     void Start()
@@ -32,9 +34,9 @@ public class WithdrawCard : MonoBehaviour {
 
     public void Withdraw()
     {
-        Transform temp;
+        //Transform temp;
         int arrayIdx = Random.Range(0, Card_Title_Array.Length);
-        string debug_title, debug_strength, debug_resistance, debug_blockname;
+        //string debug_title, debug_strength, debug_resistance, debug_blockname;
         Card_Title = Card_Title_Array[arrayIdx];
         Card_Strength = Card_Strength_Array[arrayIdx];
         Card_Resistance = Card_Resistance_Array[arrayIdx];
@@ -48,7 +50,7 @@ public class WithdrawCard : MonoBehaviour {
         newCard.GetComponentInChildren<Text>().text=Card_Title;
 
         Card_List.Add(newCard);
-        temp = Card_List[num].GetComponentInChildren<Transform>().Find("CardTitle");
+        /*temp = Card_List[num].GetComponentInChildren<Transform>().Find("CardTitle");
         debug_title = temp.GetComponent<Text>().text;
         temp = Card_List[num].GetComponentInChildren<Transform>().Find("CardStrength");
         debug_strength = temp.GetComponent<Text>().text;
@@ -56,7 +58,13 @@ public class WithdrawCard : MonoBehaviour {
         debug_resistance = temp.GetComponent<Text>().text;
         temp = Card_List[num].GetComponentInChildren<Transform>().Find("Image");
         Temp = temp.GetComponent<Image>().sprite;
-        debug_blockname = Temp.name;
+        debug_blockname = Temp.name;*/
+
+        CardStatus info_to_block = newCard.GetComponent<CardStatus>();
+        int HP_to_block = HP_Array[arrayIdx];
+        int Resistance_to_block = Resistance_Array[arrayIdx];
+        info_to_block.SetHP(HP_to_block);
+        info_to_block.SetResistance(Resistance_to_block);
 
         /*Debug.Log("List[" + num+"]");
         Debug.Log(debug_title);
