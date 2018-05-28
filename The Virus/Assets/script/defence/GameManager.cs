@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-    public static int main_block_state = 1;
+    public static int main_block_state = 0;
     public GameObject can;
     public GameObject mon;
     public GameObject block;
@@ -224,13 +224,13 @@ public class GameManager : MonoBehaviour {
                 BlockBoard[y][x].transform.localPosition = new Vector3(220 + x * 50, 220 + y * -50, 1);
                 BlockBoard[y][x].transform.localScale = new Vector3(1, 1, 1);
 
-                int iType = Random.Range(0, BlockType.Length);
+                //int iType = Random.Range(0, BlockType.Length);
 
                 block sBlock = BlockBoard[y][x].GetComponent<block>();
                 sBlock.iX = x;
                 sBlock.iY = y;
-                sBlock.iType = iType;
-                sBlock.SetBlockImg(BlockType[iType]);
+                sBlock.iType = 0;
+                sBlock.SetBlockImg(BlockType[0]);
                 //BlockBoard[x][y] = iType;
                 fill = 0;
 
@@ -248,8 +248,13 @@ public class GameManager : MonoBehaviour {
             {
                 if (BlockBoard[y][x].GetComponent<block>().state == 1)
                 {
-                    BlockBoard[y][x].GetComponent<block>().state = 2;
-                    BlockBoard[y][x].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);
+                    BlockBoard[y][x].GetComponent<block>().state = 3;
+                    BlockBoard[y][x].GetComponent<Image>().sprite = BlockType[1];
+                }
+                if (BlockBoard[y][x].GetComponent<block>().state == 4)
+                {
+                    BlockBoard[y][x].GetComponent<block>().state = 5;
+                    BlockBoard[y][x].GetComponent<Image>().color = new Color(0 / 255, 255 / 255, 191f / 255);
                 }
             }
         }
@@ -272,7 +277,7 @@ public class GameManager : MonoBehaviour {
         {
             for (int x = 0; x < iBlockX; x++)
             {
-                if (BlockBoard[y][x].GetComponent<block>().state == 2)
+                if (BlockBoard[y][x].GetComponent<block>().state == 3)
                 {
                     mons.Add(BlockBoard[y][x].GetComponent<block>().state);
                     //BlockBoard[x][y].GetComponent<block>().state = 2;

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Tower : MonoBehaviour {
 
     public GameObject[] bullet;
-    public Canvas canvas;
     float time = 0.5f;
     private int towerNum;
     private float damage;
@@ -37,7 +36,8 @@ public class Tower : MonoBehaviour {
         
         if (col.transform.tag == "monster")
         {
-            /*Debug.Log("들어옴");
+            //Debug.Log("들어옴");
+            /*
             GameObject mBullet =  Instantiate(bullet, transform.localPosition, Quaternion.identity);
             mBullet.transform.SetParent(canvas.transform);
             mBullet.transform.localScale = new Vector3(1, 1, 1);
