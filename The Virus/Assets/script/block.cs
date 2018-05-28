@@ -28,7 +28,7 @@ public class block : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("dwdq");
-        if (collision.transform.tag == "main_block" && state != 2)
+        if (collision.transform.tag == "side_block" && state != 2)
         {
             MyBlockImg.color = new Color(255/255, 100/255, 100/255);
            // Debug.Log("dwdq");
@@ -41,7 +41,7 @@ public class block : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D collision)
     {
         //Debug.Log("dwdq");
-        if (collision.transform.tag == "main_block" && state != 2)
+        if (collision.transform.tag == "side_block" && state != 2)
         {
             MyBlockImg.color = new Color(255 / 255, 100 / 255, 100 / 255);
             state = 1;
@@ -52,7 +52,7 @@ public class block : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collision)
     {
         //Debug.Log("dwdq");
-        if (collision.transform.tag == "main_block" && state != 2)
+        if (collision.transform.tag == "side_block" && state != 2)
         {
             MyBlockImg.color = new Color(255 / 255, 1, 1);
             state = 0;

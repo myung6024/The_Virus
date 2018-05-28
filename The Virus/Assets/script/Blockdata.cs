@@ -13,6 +13,7 @@ public class Blockdata : MonoBehaviour {
     public string Block_name;
     private Dragable card_received;
     private int number;
+    private int hp, resist, speed;
     //public char Blocknum;  //블럭 모양에 따른 넘버
     //public GameObject sMar;
  
@@ -23,6 +24,7 @@ public class Blockdata : MonoBehaviour {
         Dropable Block = GameObject.Find("Deck").GetComponent<Dropable>();
         card_received = Card.card_to_block;//넘겨 줄때 카드 자체를 넘겨줌!!
         Block_name = card_received.GetComponentInChildren<Transform>().Find("Image").GetComponent<Image>().sprite.name;
+
         //Debug.Log(card_received.GetComponentInChildren<Transform>().Find("CardStrength").GetComponent<Text>().text);//카드를 보냈으니 체력을 받는지 확인!!
         //Block_name = Block.picture.name;
         //Debug.Log(Block_name);

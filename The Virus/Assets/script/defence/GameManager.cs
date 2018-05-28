@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+    public static int main_block_state = 1;
     public GameObject can;
     public GameObject mon;
     public GameObject block;
@@ -68,10 +69,10 @@ public class GameManager : MonoBehaviour {
         mapMaker();
         //makeMonster();
 
-        BlockBoard = new GameObject[iBlockX][];
-        for (int i = 0; i < iBlockX; i++)
+        BlockBoard = new GameObject[iBlockY][];
+        for (int i = 0; i < iBlockY; i++)
         {
-            BlockBoard[i] = new GameObject[iBlockY];
+            BlockBoard[i] = new GameObject[iBlockX];
         }
 
         CreateBlock();
@@ -245,10 +246,10 @@ public class GameManager : MonoBehaviour {
 
             for (int x = 0; x < iBlockX; x++)
             {
-                if (BlockBoard[x][y].GetComponent<block>().state == 1)
+                if (BlockBoard[y][x].GetComponent<block>().state == 1)
                 {
-                    BlockBoard[x][y].GetComponent<block>().state = 2;
-                    BlockBoard[x][y].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);
+                    BlockBoard[y][x].GetComponent<block>().state = 2;
+                    BlockBoard[y][x].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);
                 }
             }
         }
@@ -271,9 +272,9 @@ public class GameManager : MonoBehaviour {
         {
             for (int x = 0; x < iBlockX; x++)
             {
-                if (BlockBoard[x][y].GetComponent<block>().state == 2)
+                if (BlockBoard[y][x].GetComponent<block>().state == 2)
                 {
-                    mons.Add(BlockBoard[x][y].GetComponent<block>().state);
+                    mons.Add(BlockBoard[y][x].GetComponent<block>().state);
                     //BlockBoard[x][y].GetComponent<block>().state = 2;
                     //BlockBoard[x][y].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);
                 }
