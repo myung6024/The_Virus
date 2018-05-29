@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
     public GameObject boomprefab;
 
     GameObject _prefab;
-
+      
     enum mapTile{
         none,
         tile,

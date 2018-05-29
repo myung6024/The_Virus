@@ -1719,3 +1719,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9caf2d4e3a36c9d4194768bc3e5abca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Block: {fileID: 2130217907}
+  OriginBlock: {fileID: 0}
+  mainblock: {fileID: 1835052209829898, guid: b62f5a30778e3f04a84ed44ef7dc948e, type: 2}
+  BlockType:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: dd08c41ab522d714e81b1051bf9fd772, type: 3}
+  iBlockX: 0
+  iBlockY: 0
