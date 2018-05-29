@@ -243,6 +243,7 @@ public class GameManager : MonoBehaviour {
 
     public void checkBlock()
     {
+        int cnt = 0;
         for (int y = 0; y < iBlockY; y++)
         {
 
@@ -250,6 +251,7 @@ public class GameManager : MonoBehaviour {
             {
                 if (BlockBoard[y][x].GetComponent<block>().state == 1)
                 {
+                    cnt++;
                     BlockBoard[y][x].GetComponent<block>().state = 3;
                     BlockBoard[y][x].GetComponent<Image>().sprite = BlockType[1];
                 }
@@ -261,13 +263,16 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        Transform[] childList = mainblock.GetComponentsInChildren<Transform>(true);
-        if (childList != null)
+        if (cnt > 0)
         {
-            for (int i = 0; i < childList.Length; i++)
+            Transform[] childList = mainblock.GetComponentsInChildren<Transform>(true);
+            if (childList != null)
             {
-                if (childList[i] != mainblock.transform)
-                    Destroy(childList[i].gameObject);
+                for (int i = 0; i < childList.Length; i++)
+                {
+                    if (childList[i] != mainblock.transform)
+                        Destroy(childList[i].gameObject);
+                }
             }
         }
     }
