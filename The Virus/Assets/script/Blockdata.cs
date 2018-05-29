@@ -16,14 +16,18 @@ public class Blockdata : MonoBehaviour {
     private int hp, resist, speed;
     //public char Blocknum;  //블럭 모양에 따른 넘버
     //public GameObject sMar;
- 
+
+    public string GetName()     // get,set 블록 종류에 따른 카드 이름도 넣음
+    {
+        return Block_name;
+    }
 
     public void Recieve()
     {
         Dropable Card = GameObject.Find("Deck").GetComponent<Dropable>();
         Dropable Block = GameObject.Find("Deck").GetComponent<Dropable>();
         card_received = Card.card_to_block;//넘겨 줄때 카드 자체를 넘겨줌!!
-        Block_name = card_received.GetComponentInChildren<Transform>().Find("Image").GetComponent<Image>().sprite.name;
+        //Block_name = card_received.GetComponentInChildren<Transform>().Find("Image").GetComponent<Image>().sprite.name;
 
 
 
@@ -32,7 +36,7 @@ public class Blockdata : MonoBehaviour {
         hp = Card_int_info.GetHP();
         resist = Card_int_info.GetResistance();
         //string인 카드 이름 받아오는 부분
-        //Block_name = Card_int_info.GetName();
+        Block_name = Card_int_info.GetName();
         Debug.Log(hp);
         Debug.Log(resist);
         Debug.Log(Block_name);

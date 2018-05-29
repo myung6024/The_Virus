@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WithdrawCard : MonoBehaviour {
+public class WithdrawCard : MonoBehaviour
+{
     public GameObject CardPrefab;
     public GameObject Parent;
     public GameObject Strength;
@@ -14,13 +15,14 @@ public class WithdrawCard : MonoBehaviour {
     public Sprite[] Card_Image_Array;
     private Sprite Card_Image;
     public Sprite Temp;
-    private string[] Card_Title_Array = { "코감기 ", "기침", "독감", "중이염", "성대결절"};
+    private string[] Card_Title_Array = { "코감기 ", "기침", "독감", "중이염", "성대결절" };
     private string Card_Title;
-    private string[] Card_Strength_Array = { "체력: 2", "체력: 1", "체력: 5", "체력: 6", "체력: 8"};
+    private string[] Card_Strength_Array = { "체력: 2", "체력: 1", "체력: 5", "체력: 6", "체력: 8" };
     private string Card_Strength;
     private string[] Card_Resistance_Array = { "저항력: 1", "저항력: 2", "저항력: 4", "저항력: 7", "저항력: 5" };
-    private int[] HP_Array = { 2,1,5,6,8 };
-    private int[] Resistance_Array = { 1,2,4,7,5 };
+    private string[] Card_Block_name = { "A", "B", "C", "D", "E" };
+    private int[] HP_Array = { 2, 1, 5, 6, 8 };
+    private int[] Resistance_Array = { 1, 2, 4, 7, 5 };
     private string Card_Resistance;
 
     void Start()
@@ -47,7 +49,7 @@ public class WithdrawCard : MonoBehaviour {
         GameObject newCard = Instantiate(CardPrefab);
         newCard.transform.SetParent(Parent.transform);
         newCard.transform.localScale = new Vector3(1, 1, 1);
-        newCard.GetComponentInChildren<Text>().text=Card_Title;
+        newCard.GetComponentInChildren<Text>().text = Card_Title;
 
         Card_List.Add(newCard);
         /*temp = Card_List[num].GetComponentInChildren<Transform>().Find("CardTitle");
@@ -63,8 +65,10 @@ public class WithdrawCard : MonoBehaviour {
         CardStatus info_to_block = newCard.GetComponent<CardStatus>();
         int HP_to_block = HP_Array[arrayIdx];
         int Resistance_to_block = Resistance_Array[arrayIdx];
+        string Block_Name = Card_Block_name[arrayIdx];
         info_to_block.SetHP(HP_to_block);
         info_to_block.SetResistance(Resistance_to_block);
+        info_to_block.SetName(Block_Name);
 
         /*Debug.Log("List[" + num+"]");
         Debug.Log(debug_title);

@@ -27,8 +27,8 @@ public class CardStatus : MonoBehaviour {
     {
         return CardName;
     }
-    public string SetName(string str)
+    public void SetName(string str)
     {
-        return str;
+        CardName = str;
     }
 }

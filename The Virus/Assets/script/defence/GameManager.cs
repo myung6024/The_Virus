@@ -272,29 +272,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    //블록 회전
-    public void rotation()
-    {
-        Debug.Log("destroy");
-        
-        
-        //Dropable Card = GameObject.Find("Deck").GetComponent<Dropable>();
-        //card_received = Card.card_to_block;
-        //CardStatus Card_info = card_received.GetComponent<CardStatus>();
-        //Block_name = Card_info.GetName();
-
-        //Destroy(a_block)*/
-        GameObject desObject = GameObject.Find("Canvas/Block/Block/a_block/a_block");
-        
-        if (Block_name == "A")
-        {
-            Debug.Log("destroyA");
-            Destroy(desObject);
-        }
-
-
-
-    }
 
     public void GoMonster()
     {
