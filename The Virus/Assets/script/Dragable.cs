@@ -17,7 +17,7 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             //Debug.Log("dwdq");
             Destroy(gameObject);
-            GameObject.Find("a_block").GetComponent<Blockdata>().Recieve();
+            GameObject.Find("main_block").GetComponent<Blockdata>().Recieve();
             Destroy(placeholder);
 
         }

@@ -6,6 +6,7 @@ public class CardStatus : MonoBehaviour {
     private int CardHP;
     private int CardResistance;
     private string CardName;
+    private int CardSpeed;
 
     public void SetHP(int number)
     {
@@ -14,6 +15,10 @@ public class CardStatus : MonoBehaviour {
     public void SetResistance(int number)
     {
         CardResistance = number;
+    }
+    public void SetSpeed(int number)
+    {
+        CardSpeed = number;
     }
     public int GetHP()
     {
@@ -31,4 +36,9 @@ public class CardStatus : MonoBehaviour {
     {
         CardName = str;
     }
+    public int GetSpeed()
+    {
+        return CardSpeed;
+    }
+
 }

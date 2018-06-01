@@ -4,31 +4,41 @@ using UnityEngine;
 
 public class rotation : MonoBehaviour
 {
-       
-    public GameObject Block;
-
-    private string Block_name;  //블록 이름 (get)받아오는 변수
-    private Dragable card_received;  //드래그하는 현카드 상태 받아오기
-    private int rotnum = 0;
-
-    public GameObject OriginBlock;
     public GameObject mainblock;
-    public Sprite[] BlockType;
 
-    public int iBlockX, iBlockY;    //블럭보드의 가로 세로 크기
+    public Transform Rotate(Transform sourcePoint, float rotateAngle)
+    {
+        
+        Transform targetPoint = sourcePoint;
 
+        float radian = rotateAngle / 180 * Mathf.PI;
+
+        targetPoint.transform.localPosition = new Vector3(Mathf.Cos(radian) * (sourcePoint.transform.localPosition.x)
+            - Mathf.Sin(radian) * (sourcePoint.transform.localPosition.y ),
+            Mathf.Sin(radian) * (sourcePoint.transform.localPosition.x) +
+            Mathf.Cos(radian) * (sourcePoint.transform.localPosition.y),-1);
+
+        //Debug.Log(targetPoint.transform.localPosition.y);
+        return targetPoint;
+    }
 
     //블록 회전함수
     public void Rotation()
     {
-        Debug.Log("rat");
+        Transform[] childList = mainblock.GetComponentsInChildren<Transform>(true);
+        if (childList != null)
+        {
+            for (int i = 0; i < childList.Length; i++)
+            {
+                if(!childList[i].name.Contains("main"))
+                    childList[i].transform.localPosition = Rotate(childList[i], -90).localPosition;
+            }
+        }
 
-        Blockdata blockdata = GameObject.Find("a_block").GetComponent<Blockdata>();
-        Block_name = blockdata.GetName();
-
-
+        /*
         if (Block_name == "A")
         {
+            
             if (rotnum == 0)
             {
                 rotnum = 1;
@@ -877,6 +887,7 @@ public class rotation : MonoBehaviour
 
             }
         }
+    }*/
 
     }
 

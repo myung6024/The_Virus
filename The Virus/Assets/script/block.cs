@@ -8,19 +8,18 @@ using UnityEngine.UI;
 
 
 public class block : MonoBehaviour {
-
-    public GameManager gMar;    // 게임 매니저에 접근하기 위한 변수
+    
     public Image MyBlockImg;  //현재 블록의 이미지
     public int state = 0;
 
     public int iX, iY;   //블럭 위치
     public int iType;    //블럭 종류
+    public int hp, resist, speed;
 
-    
+
     void Awake()
     {
            MyBlockImg = GetComponent<Image>();
-           gMar = GameObject.Find("GameManager").GetComponent<GameManager>();
       
     }
     public void SetBlockImg(Sprite _sprite) { MyBlockImg.sprite = _sprite; }
@@ -42,6 +41,14 @@ public class block : MonoBehaviour {
                 state = 2;
             }
 
+        }
+
+        if (collision.transform.tag == "side_block" && state ==3 && GameManager.main_block_state <= 2)
+        {
+            if (GameManager.main_block_state == 1)
+            {
+                state = 6;
+            }
         }
 
         if (collision.transform.tag == "main_block" && state <= 5)
@@ -82,6 +89,14 @@ public class block : MonoBehaviour {
             }
         }
 
+        if (collision.transform.tag == "side_block" && state == 3 && GameManager.main_block_state <= 2)
+        {
+            if (GameManager.main_block_state == 1)
+            {
+                state = 6;
+            }
+        }
+
         if (collision.transform.tag == "main_block" && state <= 5)
         {
             if (state <= 1 || state == 4)
@@ -115,6 +130,11 @@ public class block : MonoBehaviour {
             GameManager.main_block_state = 1;
 
         }
+        if (collision.transform.tag == "side_block" && state == 6 && GameManager.main_block_state <= 2)
+        {
+            state = 3;
+        }
+
 
     }
 }

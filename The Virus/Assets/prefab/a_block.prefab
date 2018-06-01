@@ -87,11 +87,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7655e16ef33db2340858ea8c73f2ff9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bMar: {fileID: 0}
   iX: 0
   iY: 0
   iType: 0
-  Block_name: 
+  hp: 0
+  resist: 0
+  speed: 0
 --- !u!114 &114869592081277334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,7 +112,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0e837baef05a7b24dbe7d2efa1c377e5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -132,7 +133,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835052209829898}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

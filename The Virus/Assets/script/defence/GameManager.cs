@@ -16,13 +16,14 @@ public class GameManager : MonoBehaviour {
     public GameObject tile_down;
     public GameObject tower;
     public GameObject final;
+    public Blockmanager blockManager;
     private string Block_name;  //블록 이름 (get)받아오는 변수
     private Dragable card_received;  //드래그하는 현카드 상태 받아오기
     public Text StageHpText;
     private int stageHp = 15;
     private Vector3 start_pos;
 
-    private List<int> mons = new List<int>();
+    private List<monster_stat> mons = new List<monster_stat>();
 
     public GameObject OriginBlock;
     public GameObject mainblock;
@@ -33,6 +34,32 @@ public class GameManager : MonoBehaviour {
     public int fill;                //블럭 보드가 채워짐 여부
 
     public GameObject boomprefab;
+
+    class monster_stat
+    {
+        int hp;
+        int resist;
+        int speed;
+
+        public monster_stat(int hp, int resist, int speed)
+        {
+            this.hp = hp;
+            this.resist = resist;
+            this.speed = speed;
+        }
+        public int getHp()
+        {
+            return hp;
+        }
+        public int getResist()
+        {
+            return resist;
+        }
+        public int getSpeed()
+        {
+            return speed;
+        }
+    }
 
     GameObject _prefab;
       
@@ -51,20 +78,23 @@ public class GameManager : MonoBehaviour {
         tower3
     }
 
-    const int mapSizeX = 10;
-    const int mapSizeY = 10;
+    const int mapSizeX = 7;
+    const int mapSizeY = 13;
 
-    mapTile[,] stage1 = new mapTile[mapSizeX, mapSizeY]{
-        {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.final, mapTile.none, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower2, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower3, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.tower, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile_up, mapTile.tile_left, mapTile.none, mapTile.tower3, mapTile.none, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_start, mapTile.none, mapTile.tower2, mapTile.none, mapTile.none, mapTile.none }};
+    mapTile[,] stage1 = new mapTile[mapSizeY, mapSizeX]{
+        {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.final, mapTile.none },
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none },
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower2},
+    {mapTile.tower2, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower3},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile_up, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.tower},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile_up, mapTile.tile_left, mapTile.none, mapTile.tower3},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.tower2 },
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_start, mapTile.none, mapTile.none}};
 	// Use this for initialization
 
 	void Start () {
@@ -89,9 +119,9 @@ public class GameManager : MonoBehaviour {
 
     void mapMaker()
     {
-        for(int i=0; i< mapSizeX; i++)
+        for(int i=0; i< mapSizeY; i++)
         {
-            for(int j=0;j< mapSizeY;j++)
+            for(int j=0;j< mapSizeX;j++)
             {
                 if(stage1[i,j] == mapTile.none) { }
                 else
@@ -108,8 +138,8 @@ public class GameManager : MonoBehaviour {
                     else if (stage1[i, j] == mapTile.final) { _prefab = final; }
 
                     GameObject prefab = Instantiate(_prefab, new Vector3(0, 0, 0), Quaternion.identity);
-                    prefab.transform.parent = can.transform;
-                    prefab.transform.localPosition = new Vector3(60 * j - 520, 300 - 60 * i, 0);
+                    prefab.transform.SetParent(can.transform);
+                    prefab.transform.localPosition = new Vector3(100 * j - 520, 300 - 100 * i, 0);
                     prefab.transform.localScale = new Vector3(1, 1, 1);
 
                     if (stage1[i, j] == mapTile.tile_start) { start_pos = prefab.transform.localPosition; }
@@ -155,7 +185,7 @@ public class GameManager : MonoBehaviour {
         for(int i=0; i<mons.Count; i++)
         {
             GameObject prefab = Instantiate(monster, new Vector3(0, 0, 0), Quaternion.identity);
-            if (mons[i] % 2 == 0)
+            /*if (mons[i] % 2 == 0)
             {
                 prefab.GetComponent<Monster>().setState(0, 3, 100, 10, Monster.characteristic.NULL);
                 prefab.transform.SetParent(mon.transform);
@@ -175,7 +205,11 @@ public class GameManager : MonoBehaviour {
                 prefab.transform.SetParent(mon.transform);
                 prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
                 prefab.transform.localScale = new Vector3(1, 1, 1);
-            }
+            }*/
+            prefab.GetComponent<Monster>().setState(0, mons[i].getSpeed(), mons[i].getHp(), mons[i].getResist(), Monster.characteristic.NULL);
+            prefab.transform.SetParent(mon.transform);
+            prefab.transform.localPosition = new Vector3(100 * 4 - 520, start_pos.y - 100 * i, 0);
+            prefab.transform.localScale = new Vector3(1, 1, 1);
         }
 
         mons.Clear();
@@ -243,6 +277,7 @@ public class GameManager : MonoBehaviour {
 
     public void checkBlock()
     {
+        Blockdata main_block = GameObject.Find("main_block").GetComponent<Blockdata>();
         int cnt = 0;
         for (int y = 0; y < iBlockY; y++)
         {
@@ -250,15 +285,28 @@ public class GameManager : MonoBehaviour {
             for (int x = 0; x < iBlockX; x++)
             {
                 if (BlockBoard[y][x].GetComponent<block>().state == 1)
+                {  
+                    BlockBoard[y][x].GetComponent<block>().state = 3;
+                    BlockBoard[y][x].GetComponent<block>().hp = main_block.getHp();
+                    BlockBoard[y][x].GetComponent<block>().resist = main_block.getResist();
+                    BlockBoard[y][x].GetComponent<block>().speed = main_block.getSpeed();
+                    BlockBoard[y][x].GetComponent<Image>().sprite = blockManager.BlockType[main_block.iType];
+                    BlockBoard[y][x].GetComponent<Image>().color = new Color(1, 1, 1);
+                }
+                else if (BlockBoard[y][x].GetComponent<block>().state == 4)
                 {
                     cnt++;
-                    BlockBoard[y][x].GetComponent<block>().state = 3;
-                    BlockBoard[y][x].GetComponent<Image>().sprite = BlockType[1];
-                }
-                if (BlockBoard[y][x].GetComponent<block>().state == 4)
-                {
                     BlockBoard[y][x].GetComponent<block>().state = 5;
-                    BlockBoard[y][x].GetComponent<Image>().color = new Color(0 / 255, 255 / 255, 191f / 255);
+                    BlockBoard[y][x].GetComponent<Image>().sprite = blockManager.mainBlockType[main_block.iType];
+                    BlockBoard[y][x].GetComponent<Image>().color = new Color(1, 1, 1);
+                }
+                else if (BlockBoard[y][x].GetComponent<block>().state == 6)
+                {
+                    print("겹침");
+                    BlockBoard[y][x].GetComponent<block>().state = 3;
+                    BlockBoard[y][x].GetComponent<block>().hp += main_block.getHp();
+                    BlockBoard[y][x].GetComponent<block>().resist += main_block.getResist();
+                    BlockBoard[y][x].GetComponent<block>().speed = (main_block.getSpeed() + BlockBoard[y][x].GetComponent<block>().speed)/2;
                 }
             }
         }
@@ -287,7 +335,9 @@ public class GameManager : MonoBehaviour {
             {
                 if (BlockBoard[y][x].GetComponent<block>().state == 3)
                 {
-                    mons.Add(BlockBoard[y][x].GetComponent<block>().state);
+                    block bl = BlockBoard[y][x].GetComponent<block>();
+                    mons.Add(new monster_stat(bl.hp, bl.resist, bl.speed));
+                        //BlockBoard[y][x].GetComponent<block>().state);
                     //BlockBoard[x][y].GetComponent<block>().state = 2;
                     //BlockBoard[x][y].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);
                 }

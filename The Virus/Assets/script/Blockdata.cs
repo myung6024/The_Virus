@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Blockdata : MonoBehaviour {
 
-    public Blockmanager bMar;    // 블럭 매니저에 접근하기 위한 변수
+    //public Blockmanager bMar;    // 블럭 매니저에 접근하기 위한 변수
     //private SpriteRenderer MyBlockImg;  //현재 블록의 이미지
 
     public int iX, iY;   //블럭 위치
@@ -13,7 +13,7 @@ public class Blockdata : MonoBehaviour {
     private string Block_name;  //블록 종류에 따른 이름 (a,b,c,d..)
     private Dragable card_received;
     private int number;
-    private int hp, resist, speed;
+    [SerializeField] private int hp, resist, speed;
     //public char Blocknum;  //블럭 모양에 따른 넘버
     //public GameObject sMar;
 
@@ -35,6 +35,8 @@ public class Blockdata : MonoBehaviour {
         CardStatus Card_int_info= card_received.GetComponent<CardStatus>();
         hp = Card_int_info.GetHP();
         resist = Card_int_info.GetResistance();
+        speed = Card_int_info.GetSpeed();
+        iType = int.Parse(Card_int_info.GetName());
         //string인 카드 이름 받아오는 부분
         Block_name = Card_int_info.GetName();
         Debug.Log(hp);
@@ -75,5 +77,32 @@ public class Blockdata : MonoBehaviour {
 
     }
     public void SetBlockImg(Sprite _sprite) {
-        gameObject.GetComponent<Image>().sprite = _sprite;}
+        gameObject.GetComponent<Image>().sprite = _sprite;
+    }
+
+    public void setHp(int num)
+    {
+        hp = num;
+    }
+    public void setResist(int num)
+    {
+        resist = num;
+    }
+    public void setSpeed(int num)
+    {
+        speed = num;
+    }
+
+    public int getHp()
+    {
+        return hp;
+    }
+    public int getResist()
+    {
+        return resist;
+    }
+    public int getSpeed()
+    {
+        return speed;
+    }
 }
