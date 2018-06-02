@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
     public static int main_block_state = 0;
     public GameObject can;
+    public GameObject blockParent;
     public GameObject mon;
     public GameObject block;
     public GameObject monster;
@@ -16,12 +17,25 @@ public class GameManager : MonoBehaviour {
     public GameObject tile_down;
     public GameObject tower;
     public GameObject final;
+    public GameObject specialLight;
+    public ParticleSystem specialLight_color;
     public Blockmanager blockManager;
+    public WithdrawCard cardManager;
     private string Block_name;  //블록 이름 (get)받아오는 변수
     private Dragable card_received;  //드래그하는 현카드 상태 받아오기
     public Text StageHpText;
     private int stageHp = 15;
     private Vector3 start_pos;
+
+    public Text CardSpac_health;
+    public Text CardSpac_resist;
+    public Text CardSpac_speed;
+
+    public Sprite[] days;
+    public Image dayText;
+    private int day = 0;
+
+    public GameObject publishBtn;
 
     private List<monster_stat> mons = new List<monster_stat>();
 
@@ -31,9 +45,11 @@ public class GameManager : MonoBehaviour {
 
     public int iBlockX, iBlockY;    //블럭보드의 가로 세로 크기
     public GameObject[][] BlockBoard;      //블럭 보드
+    public GameObject[][] ParticleBoard;      //블럭 보드
     public int fill;                //블럭 보드가 채워짐 여부
 
     public GameObject boomprefab;
+    public GameObject boomEffect_prefab;
 
     class monster_stat
     {
@@ -82,16 +98,16 @@ public class GameManager : MonoBehaviour {
     const int mapSizeY = 13;
 
     mapTile[,] stage1 = new mapTile[mapSizeY, mapSizeX]{
-        {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.final, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower2},
-    {mapTile.tower2, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower3},
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower},
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile_up, mapTile.none},
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.tower},
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none},
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.tile_up, mapTile.tile_left, mapTile.none, mapTile.tower3},
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.tower2 },
+        {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_right, mapTile.final, mapTile.none },
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none },
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none },
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_start, mapTile.none, mapTile.none}};
@@ -102,9 +118,11 @@ public class GameManager : MonoBehaviour {
         //makeMonster();
 
         BlockBoard = new GameObject[iBlockY][];
+        ParticleBoard = new GameObject[iBlockY][];
         for (int i = 0; i < iBlockY; i++)
         {
             BlockBoard[i] = new GameObject[iBlockX];
+            ParticleBoard[i] = new GameObject[iBlockX];
         }
 
         CreateBlock();
@@ -115,6 +133,19 @@ public class GameManager : MonoBehaviour {
         stageHp -= 1;
         Debug.Log(stageHp);
         StageHpText.GetComponent<Text>().text = "HP : " + stageHp.ToString();
+    }
+
+    public void publishOn()
+    {
+        publishBtn.SetActive(true);
+        cardManager.DrawCard(2);
+    }
+
+    public void SetCardSpacText(int heal,int res,int spe)
+    {
+        CardSpac_health.text = "체력 : " + heal;
+        CardSpac_resist.text = "저항력 : " + res;
+        CardSpac_speed.text = "이동속도 : " + spe;
     }
 
     void mapMaker()
@@ -147,6 +178,47 @@ public class GameManager : MonoBehaviour {
                     if (stage1[i, j] == mapTile.tower) { prefab.GetComponent<Tower>().setState(0, 4, 0.1f); }
                     else if (stage1[i, j] == mapTile.tower2) { prefab.GetComponent<Tower>().setState(1, 4, 0.1f); }
                     else if (stage1[i, j] == mapTile.tower3) { prefab.GetComponent<Tower>().setState(2, 4, 0.5f); }
+
+                    else if (stage1[i, j] == mapTile.tile)
+                    {
+                        if (stage1[i, j + 1] != mapTile.none && stage1[i, j - 1] != mapTile.none)
+                        {
+                            prefab.transform.localRotation = Quaternion.Euler(0f, 0f, 90);
+                        }
+                    }
+                    else if (stage1[i, j] == mapTile.tile_down) {
+                        
+                    }
+                    else if (stage1[i, j] == mapTile.tile_left) {
+                        if (j > 0)
+                        {
+                            if (stage1[i, j - 1] != mapTile.none && stage1[i + 1, j] != mapTile.none)
+                                prefab.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                            if (stage1[i, j - 1] != mapTile.none && stage1[i - 1, j] != mapTile.none)
+                                prefab.transform.localRotation = Quaternion.Euler(0f, 0f, -90f);
+
+                        }
+                    }
+                    else if (stage1[i, j] == mapTile.tile_right) {
+                        if (j > 0)
+                        {
+                            if (stage1[i, j + 1] != mapTile.none && stage1[i + 1, j] != mapTile.none)
+                            {
+                                
+                                prefab.transform.localRotation = Quaternion.Euler(0f, 0f, -90f);
+                            }
+
+                        }
+                    }
+                    else if (stage1[i, j] == mapTile.tile_up) {
+
+                        if (stage1[i, j - 1] != mapTile.none)
+                        {
+                            prefab.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                        }
+
+
+                    }
                 }
 
             }
@@ -181,7 +253,17 @@ public class GameManager : MonoBehaviour {
                 prefab.transform.localScale = new Vector3(1, 1, 1);
             }
         }*/
-
+        Transform[] childList = mon.GetComponentsInChildren<Transform>(true);
+        if (childList != null)
+        {
+            for (int i = 0; i < childList.Length; i++)
+            {
+                if (childList[i] != mon.transform)
+                    Destroy(childList[i].gameObject);
+            }
+        }
+        publishBtn.SetActive(false);
+        PublicStatic.liveMonCnt = mons.Count;
         for(int i=0; i<mons.Count; i++)
         {
             GameObject prefab = Instantiate(monster, new Vector3(0, 0, 0), Quaternion.identity);
@@ -224,10 +306,16 @@ public class GameManager : MonoBehaviour {
     IEnumerator boom(Vector3 pos)
     {
         float size = 0;
+        GameObject BoomEffect = Instantiate(boomEffect_prefab, pos, Quaternion.identity);
+        BoomEffect.transform.SetParent(can.transform);
+        BoomEffect.transform.localScale = new Vector3(100, 100, 1);
+        BoomEffect.transform.localPosition = pos - new Vector3(0, 0, 2);
+
         GameObject Boom = Instantiate(boomprefab, pos, Quaternion.identity);
         Boom.transform.SetParent(can.transform);
-        Boom.transform.localScale = new Vector3(size, size, 1);
-        Boom.transform.localPosition = pos;
+        Boom.transform.localScale = new Vector3(100, 100, 1);
+        Boom.transform.localPosition = pos - new Vector3(0,0,2);
+        //yield return new WaitForSeconds(1f);
         while (size < 1)
         {
             size += 0.1f;
@@ -304,9 +392,19 @@ public class GameManager : MonoBehaviour {
                 {
                     print("겹침");
                     BlockBoard[y][x].GetComponent<block>().state = 3;
-                    BlockBoard[y][x].GetComponent<block>().hp += main_block.getHp();
-                    BlockBoard[y][x].GetComponent<block>().resist += main_block.getResist();
-                    BlockBoard[y][x].GetComponent<block>().speed = (main_block.getSpeed() + BlockBoard[y][x].GetComponent<block>().speed)/2;
+                    BlockBoard[y][x].GetComponent<block>().hp += main_block.getHp() + BlockBoard[y][x].GetComponent<block>().hp/10;
+                    BlockBoard[y][x].GetComponent<block>().resist += main_block.getResist() + BlockBoard[y][x].GetComponent<block>().resist / 10;
+                    BlockBoard[y][x].GetComponent<block>().speed = (main_block.getSpeed() + BlockBoard[y][x].GetComponent<block>().speed)/2 + BlockBoard[y][x].GetComponent<block>().speed/5;
+                    BlockBoard[y][x].GetComponent<Image>().color -= new Color(20/255f, 80/255f, 80/255f,0);
+
+                    if (ParticleBoard[y][x] == null && BlockBoard[y][x].GetComponent<block>().hp > 200)
+                    {
+                        ParticleBoard[y][x] = Instantiate(specialLight, new Vector3(0, 0, 0), Quaternion.identity);
+                        ParticleBoard[y][x].transform.SetParent(blockParent.transform);
+                        ParticleBoard[y][x].transform.localPosition = BlockBoard[y][x].transform.localPosition + new Vector3(0, 0, -2);
+                        ParticleBoard[y][x].transform.localScale = new Vector3(100, 100, 1);
+                        ParticleBoard[y][x].GetComponent<ParticleSystem>().startColor -= new Color(0, 80 / 255f, 80 / 255f, 0);
+                    }
                 }
             }
         }
@@ -328,7 +426,8 @@ public class GameManager : MonoBehaviour {
 
     public void GoMonster()
     {
-        
+        day++;
+        dayText.sprite = days[day];
         for (int y = 0; y < iBlockY; y++)
         {
             for (int x = 0; x < iBlockX; x++)

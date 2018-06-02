@@ -52,7 +52,7 @@ public class Tower : MonoBehaviour {
     IEnumerator moveBullet(GameObject mBullet, Vector3 monster)
     {
         while (mBullet.activeSelf && (mBullet.transform.localPosition.x < 800 && mBullet.transform.localPosition.x > -800) &&
-            (mBullet.transform.localPosition.y < 800 && mBullet.transform.localPosition.y > -800))
+            (mBullet.transform.localPosition.y < 1400 && mBullet.transform.localPosition.y > -1400))
         {
 
             // Target위치에서 자신의 위치를 뺀다

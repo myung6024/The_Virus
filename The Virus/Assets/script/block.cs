@@ -137,6 +137,13 @@ public class block : MonoBehaviour {
 
 
     }
+    public void pp()
+    {
+        if(state == 3)
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().SetCardSpacText(hp,resist,speed);
+        }
+    }
 }
 
     /*

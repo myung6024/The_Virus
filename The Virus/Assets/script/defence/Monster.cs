@@ -147,4 +147,13 @@ public class Monster : MonoBehaviour {
         }
 
     }
+
+    void OnDisable()
+    {
+        --PublicStatic.liveMonCnt;
+        if(PublicStatic.liveMonCnt == 0)
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().publishOn();
+        }
+    }
 }

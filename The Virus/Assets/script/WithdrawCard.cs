@@ -27,7 +27,7 @@ public class WithdrawCard : MonoBehaviour
     private string[] Card_Block_name = { "0", "1", "2", "3", "4" };
     private int[] HP_Array = { 100, 50, 70, 60, 75 };
     private int[] Resistance_Array = { 1, 2, 4, 7, 5 };
-    private int[] Speed_Array = { 1, 2, 4, 7, 5 };
+    private int[] Speed_Array = { 5, 4, 6, 7, 5 };
     private string Card_Resistance;
 
     void Start()
@@ -36,10 +36,15 @@ public class WithdrawCard : MonoBehaviour
         StartCoroutine(draw(3));
     }
 
-    public void Withdraw()
+    public void DrawCard(int num)
+    {
+        StartCoroutine(draw(num));
+    }
+
+    public void Withdraw(int arrayIdx)
     {
         //Transform temp;
-        int arrayIdx = Random.Range(0, Card_Title_Array.Length);
+        
         //string debug_title, debug_strength, debug_resistance, debug_blockname;
         Card_Title = Card_Title_Array[arrayIdx];
         //Card_Strength = Card_Strength_Array[arrayIdx];
@@ -102,7 +107,8 @@ public class WithdrawCard : MonoBehaviour
     {
         for(int i=0; i<cnt; i++)
         {
-            Withdraw();
+            int arrayIdx = Random.Range(0, Card_Title_Array.Length);
+            Withdraw(arrayIdx);
             yield return new WaitForSeconds(0.1f);
         }
 

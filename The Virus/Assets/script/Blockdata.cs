@@ -13,6 +13,7 @@ public class Blockdata : MonoBehaviour {
     private string Block_name;  //블록 종류에 따른 이름 (a,b,c,d..)
     private Dragable card_received;
     private int number;
+    public WithdrawCard draw;
     [SerializeField] private int hp, resist, speed;
     //public char Blocknum;  //블럭 모양에 따른 넘버
     //public GameObject sMar;
@@ -24,6 +25,17 @@ public class Blockdata : MonoBehaviour {
 
     public void Recieve()
     {
+        Transform[] childList = GetComponentsInChildren<Transform>(true);
+        if (childList.Length > 1)
+        {
+            for (int i = 0; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                    Destroy(childList[i].gameObject);
+            }
+            draw.Withdraw(int.Parse(Block_name));
+        }
+
         Dropable Card = GameObject.Find("Deck").GetComponent<Dropable>();
         Dropable Block = GameObject.Find("Deck").GetComponent<Dropable>();
         card_received = Card.card_to_block;//넘겨 줄때 카드 자체를 넘겨줌!!
