@@ -56,9 +56,11 @@ public class GameManager : MonoBehaviour {
         int hp;
         int resist;
         int speed;
+        int type;
 
-        public monster_stat(int hp, int resist, int speed)
+        public monster_stat(int type,int hp, int resist, int speed)
         {
+            this.type = type;
             this.hp = hp;
             this.resist = resist;
             this.speed = speed;
@@ -74,6 +76,10 @@ public class GameManager : MonoBehaviour {
         public int getSpeed()
         {
             return speed;
+        }
+        public int getType()
+        {
+            return type;
         }
     }
 
@@ -99,16 +105,16 @@ public class GameManager : MonoBehaviour {
 
     mapTile[,] stage1 = new mapTile[mapSizeY, mapSizeX]{
         {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_right, mapTile.final, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none },
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower, mapTile.none },
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
-    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.tower2, mapTile.none},
     {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower3, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_start, mapTile.none, mapTile.none}};
 	// Use this for initialization
@@ -130,6 +136,7 @@ public class GameManager : MonoBehaviour {
 
     public void damageTohp()
     {
+        FK.StaticFunc.ETCFunc.ShakeCamera(0.1f, 0.1f);
         stageHp -= 1;
         Debug.Log(stageHp);
         StageHpText.GetComponent<Text>().text = "HP : " + stageHp.ToString();
@@ -137,8 +144,11 @@ public class GameManager : MonoBehaviour {
 
     public void publishOn()
     {
-        publishBtn.SetActive(true);
-        cardManager.DrawCard(2);
+        if (publishBtn.activeSelf == false)
+        {
+            publishBtn.SetActive(true);
+            cardManager.DrawCard(2);
+        }
     }
 
     public void SetCardSpacText(int heal,int res,int spe)
@@ -288,7 +298,7 @@ public class GameManager : MonoBehaviour {
                 prefab.transform.localPosition = new Vector3(60 * 4 - 520, start_pos.y - 60 * i, 0);
                 prefab.transform.localScale = new Vector3(1, 1, 1);
             }*/
-            prefab.GetComponent<Monster>().setState(0, mons[i].getSpeed(), mons[i].getHp(), mons[i].getResist(), Monster.characteristic.NULL);
+            prefab.GetComponent<Monster>().setState(mons[i].getType(), mons[i].getSpeed(), mons[i].getHp(), mons[i].getResist(), Monster.characteristic.NULL);
             prefab.transform.SetParent(mon.transform);
             prefab.transform.localPosition = new Vector3(100 * 4 - 520, start_pos.y - 100 * i, 0);
             prefab.transform.localScale = new Vector3(1, 1, 1);
@@ -309,7 +319,7 @@ public class GameManager : MonoBehaviour {
         GameObject BoomEffect = Instantiate(boomEffect_prefab, pos, Quaternion.identity);
         BoomEffect.transform.SetParent(can.transform);
         BoomEffect.transform.localScale = new Vector3(100, 100, 1);
-        BoomEffect.transform.localPosition = pos - new Vector3(0, 0, 2);
+        BoomEffect.transform.localPosition = pos - new Vector3(0, 0, 8);
 
         GameObject Boom = Instantiate(boomprefab, pos, Quaternion.identity);
         Boom.transform.SetParent(can.transform);
@@ -378,6 +388,7 @@ public class GameManager : MonoBehaviour {
                     BlockBoard[y][x].GetComponent<block>().hp = main_block.getHp();
                     BlockBoard[y][x].GetComponent<block>().resist = main_block.getResist();
                     BlockBoard[y][x].GetComponent<block>().speed = main_block.getSpeed();
+                    BlockBoard[y][x].GetComponent<block>().iType = main_block.iType;
                     BlockBoard[y][x].GetComponent<Image>().sprite = blockManager.BlockType[main_block.iType];
                     BlockBoard[y][x].GetComponent<Image>().color = new Color(1, 1, 1);
                 }
@@ -435,7 +446,7 @@ public class GameManager : MonoBehaviour {
                 if (BlockBoard[y][x].GetComponent<block>().state == 3)
                 {
                     block bl = BlockBoard[y][x].GetComponent<block>();
-                    mons.Add(new monster_stat(bl.hp, bl.resist, bl.speed));
+                    mons.Add(new monster_stat(bl.iType, bl.hp, bl.resist, bl.speed));
                         //BlockBoard[y][x].GetComponent<block>().state);
                     //BlockBoard[x][y].GetComponent<block>().state = 2;
                     //BlockBoard[x][y].GetComponent<Image>().color = new Color(100 / 255, 100 / 255, 100 / 255);

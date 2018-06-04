@@ -54,6 +54,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[x][0] = 0;
 
             }
@@ -74,6 +75,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[0][y] = 0;
 
 
@@ -99,6 +101,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[x][0] = 1;
 
             }
@@ -119,6 +122,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[0][y] = 1;
 
             }
@@ -147,6 +151,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[x][0] = 2;
 
                 Blockdata sbBlock = b_block.GetComponent<Blockdata>();
@@ -157,6 +162,7 @@ public class Blockmanager : MonoBehaviour
                 sbBlock.setHp(blockstate.getHp());
                 sbBlock.setResist(blockstate.getResist());
                 sbBlock.setSpeed(blockstate.getSpeed());
+                sbBlock.iType = blockstate.iType;
                 BlockBoard[x][0] = 2;
 
             }
@@ -186,6 +192,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[x][0] = 3;
 
                 Blockdata sbBlock = b_block.GetComponent<Blockdata>();
@@ -196,6 +203,7 @@ public class Blockmanager : MonoBehaviour
                 sbBlock.setHp(blockstate.getHp());
                 sbBlock.setResist(blockstate.getResist());
                 sbBlock.setSpeed(blockstate.getSpeed());
+                sbBlock.iType = blockstate.iType;
                 BlockBoard[x][0] = 3;
 
             }
@@ -214,6 +222,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[0][y] = 3;
 
             }
@@ -234,6 +243,7 @@ public class Blockmanager : MonoBehaviour
                 sBlock.setHp(blockstate.getHp());
                 sBlock.setResist(blockstate.getResist());
                 sBlock.setSpeed(blockstate.getSpeed());
+                sBlock.iType = blockstate.iType;
                 BlockBoard[0][y] = 4;
 
             }

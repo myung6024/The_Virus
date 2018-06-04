@@ -38,12 +38,14 @@ public class Monster : MonoBehaviour {
 
     public void setState(int monNum, float speed, int hp, int resist, characteristic cha)
     {
+        print(monNum);
         moveSpeed = speed;
         this.hp = hp;
         nowHp = hp;
         monCha = cha;
         this.resist = resist;
         GetComponent<Image>().sprite = monImage[monNum];
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -55,7 +57,9 @@ public class Monster : MonoBehaviour {
             collision.gameObject.SetActive(false);
             if(nowHp <= 0)
             {
+                hpCnt();
                 gameObject.SetActive(false);
+                
                 //Destroy(gameObject);
             }
 
@@ -69,6 +73,7 @@ public class Monster : MonoBehaviour {
             collision.gameObject.SetActive(false);
             if (nowHp <= 0)
             {
+                hpCnt();
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
             }
@@ -89,6 +94,7 @@ public class Monster : MonoBehaviour {
             //collision.gameObject.SetActive(false);
             if (nowHp <= 0)
             {
+                hpCnt();
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
             }
@@ -117,6 +123,7 @@ public class Monster : MonoBehaviour {
         if (collision.transform.tag == "final")
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().damageTohp();
+            hpCnt();
             gameObject.SetActive(false);
             //Destroy(gameObject);
         }
@@ -148,7 +155,7 @@ public class Monster : MonoBehaviour {
 
     }
 
-    void OnDisable()
+    void hpCnt()
     {
         --PublicStatic.liveMonCnt;
         if(PublicStatic.liveMonCnt == 0)

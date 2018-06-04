@@ -35,7 +35,10 @@ public class WithdrawCard : MonoBehaviour
         Card_List = new List<GameObject>();
         StartCoroutine(draw(3));
     }
-
+    public void deckCnt()
+    {
+        num--;
+    }
     public void DrawCard(int num)
     {
         StartCoroutine(draw(num));
@@ -107,9 +110,12 @@ public class WithdrawCard : MonoBehaviour
     {
         for(int i=0; i<cnt; i++)
         {
-            int arrayIdx = Random.Range(0, Card_Title_Array.Length);
-            Withdraw(arrayIdx);
-            yield return new WaitForSeconds(0.1f);
+            if (num < 4)
+            {
+                int arrayIdx = Random.Range(0, Card_Title_Array.Length);
+                Withdraw(arrayIdx);
+                yield return new WaitForSeconds(0.1f);
+            }
         }
 
     }
