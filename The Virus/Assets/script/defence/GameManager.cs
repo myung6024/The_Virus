@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
 
     public Sprite[] days;
     public Image dayText;
+    public GameObject dayText2;
     private int day = 0;
 
     public GameObject publishBtn;
@@ -50,6 +51,9 @@ public class GameManager : MonoBehaviour {
 
     public GameObject boomprefab;
     public GameObject boomEffect_prefab;
+
+    public GameObject Clear;
+    public GameObject Fail;
 
     class monster_stat
     {
@@ -110,11 +114,11 @@ public class GameManager : MonoBehaviour {
     {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
-    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.tower2, mapTile.none},
+    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower3, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_start, mapTile.none, mapTile.none}};
 	// Use this for initialization
@@ -136,10 +140,14 @@ public class GameManager : MonoBehaviour {
 
     public void damageTohp()
     {
-        FK.StaticFunc.ETCFunc.ShakeCamera(0.1f, 0.1f);
+        FK.StaticFunc.ETCFunc.ShakeCamera(0.1f, 15f);
         stageHp -= 1;
         Debug.Log(stageHp);
         StageHpText.GetComponent<Text>().text = "HP : " + stageHp.ToString();
+        if(stageHp == 0)
+        {
+            Clear.SetActive(true);
+        }
     }
 
     public void publishOn()
@@ -148,6 +156,10 @@ public class GameManager : MonoBehaviour {
         {
             publishBtn.SetActive(true);
             cardManager.DrawCard(2);
+        }
+        if(day == 10)
+        {
+            Fail.SetActive(true);
         }
     }
 
@@ -318,8 +330,8 @@ public class GameManager : MonoBehaviour {
         float size = 0;
         GameObject BoomEffect = Instantiate(boomEffect_prefab, pos, Quaternion.identity);
         BoomEffect.transform.SetParent(can.transform);
-        BoomEffect.transform.localScale = new Vector3(100, 100, 1);
-        BoomEffect.transform.localPosition = pos - new Vector3(0, 0, 8);
+        BoomEffect.transform.localScale = new Vector3(100, 100, 178);
+        BoomEffect.transform.localPosition = pos - new Vector3(0, 0, 10000);
 
         GameObject Boom = Instantiate(boomprefab, pos, Quaternion.identity);
         Boom.transform.SetParent(can.transform);
@@ -412,8 +424,8 @@ public class GameManager : MonoBehaviour {
                     {
                         ParticleBoard[y][x] = Instantiate(specialLight, new Vector3(0, 0, 0), Quaternion.identity);
                         ParticleBoard[y][x].transform.SetParent(blockParent.transform);
-                        ParticleBoard[y][x].transform.localPosition = BlockBoard[y][x].transform.localPosition + new Vector3(0, 0, -2);
-                        ParticleBoard[y][x].transform.localScale = new Vector3(100, 100, 1);
+                        ParticleBoard[y][x].transform.localPosition = BlockBoard[y][x].transform.localPosition + new Vector3(0, 0, -10000);
+                        ParticleBoard[y][x].transform.localScale = new Vector3(100, 100, 178);
                         ParticleBoard[y][x].GetComponent<ParticleSystem>().startColor -= new Color(0, 80 / 255f, 80 / 255f, 0);
                     }
                 }
@@ -437,14 +449,25 @@ public class GameManager : MonoBehaviour {
 
     public void GoMonster()
     {
-        day++;
-        dayText.sprite = days[day];
+        int cnt=0;
+        ++day;
+        if (day >= 10)
+        {
+            dayText.sprite = days[day / 10];
+            dayText2.SetActive(true);
+            dayText2.GetComponent<Image>().sprite = days[day % 10];
+        }
+        else
+        {
+            dayText.sprite = days[day];
+        }
         for (int y = 0; y < iBlockY; y++)
         {
             for (int x = 0; x < iBlockX; x++)
             {
                 if (BlockBoard[y][x].GetComponent<block>().state == 3)
                 {
+                    cnt++;
                     block bl = BlockBoard[y][x].GetComponent<block>();
                     mons.Add(new monster_stat(bl.iType, bl.hp, bl.resist, bl.speed));
                         //BlockBoard[y][x].GetComponent<block>().state);
@@ -454,6 +477,15 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        makeMonster();
+        if(cnt == 0)
+        {
+            publishOn();
+        }else
+            makeMonster();
+    }
+
+    public void GoToStage()
+    {
+        LoadingManager.LoadScene("Stage");
     }
 }

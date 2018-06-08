@@ -43,11 +43,11 @@ public class CameraMove : MonoBehaviour {
     IEnumerator cameraLeftmove()
     {
         left = true;
-        print("들어옴");
-        while (transform.position.x > -3.65f)
+        //print("들어옴");
+        while (transform.localPosition.x < 660f)
         {
-            Vector3 TargetPos = new Vector3(-5f, 0, -10);
-            transform.position = Vector3.Lerp(transform.position, TargetPos, Time.deltaTime * 3f);
+            Vector3 TargetPos = new Vector3(1200f, 0, -10);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, TargetPos, Time.deltaTime * 3f);
             yield return new WaitForSeconds(0.02f);
         }
         left = false;
@@ -56,11 +56,11 @@ public class CameraMove : MonoBehaviour {
     IEnumerator cameraRightmove()
     {
         right = true;
-        print("들어옴");
-        while (transform.position.x < 3.65f)
+        //print("들어옴");
+        while (transform.localPosition.x > -650f)
         {
-            Vector3 TargetPos = new Vector3(5f, 0, -10);
-            transform.position = Vector3.Lerp(transform.position, TargetPos, Time.deltaTime * 3f);
+            Vector3 TargetPos = new Vector3(-1200f, 0, -10);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, TargetPos, Time.deltaTime * 3f);
             yield return new WaitForSeconds(0.02f);
         }
 

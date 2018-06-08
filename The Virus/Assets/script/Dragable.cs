@@ -9,6 +9,8 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public Transform parentToReturnTo = null;
     public Transform placeholderparent = null;
     public GameObject placeholder = null;
+    GameObject bigcard = null;
+    private Transform bigCardParent;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,7 +29,7 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnBeginDrag");
+        Debug.Log("OnBeginDrag");
         placeholder = new GameObject();
         placeholder.transform.SetParent(this.transform.parent);
         placeholder.transform.localScale = new Vector3(1,1,1);
@@ -49,8 +51,13 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnDrag(PointerEventData eventData)
     {
         placeholder.transform.SetParent(placeholderparent);
-        //Debug.Log("OnDrag");
+        
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Debug.Log(mousePos.y);
+        if (mousePos.y > -4.9 && bigcard != null)
+        {
+            Destroy(bigcard);
+        }
         transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
         int temp = placeholderparent.childCount;
         for (int i = 0; i < placeholderparent.childCount; i++)
@@ -79,6 +86,21 @@ public class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeholder);
+    }
+
+    public void OnClick()
+    {
+        bigcard = (GameObject)Instantiate(this.gameObject, transform.position, transform.rotation);
+        bigCardParent = GameObject.Find("BigCard").transform;
+        bigcard.transform.SetParent(bigCardParent.transform);
+        
+        bigcard.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<LayoutElement>().preferredWidth, this.GetComponent<LayoutElement>().preferredHeight);
+        bigcard.transform.localScale = new Vector3(2, 2, 1);
+        bigcard.transform.position = new Vector3(this.transform.position.x, -4f, 0);
+    }
+    public void OnDown ()
+    {
+        Destroy(bigcard);
     }
 
 

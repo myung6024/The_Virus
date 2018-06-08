@@ -19,7 +19,7 @@ public class Tower : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        myposition = transform.position;
+        myposition = transform.localPosition;
         StartCoroutine(coolTime());
 	}
 
@@ -58,7 +58,7 @@ public class Tower : MonoBehaviour {
             // Target위치에서 자신의 위치를 뺀다
             Vector3 vec3dir = monster - myposition;
             vec3dir.Normalize();
-            mBullet.transform.position = mBullet.transform.position + vec3dir/10;
+            mBullet.transform.localPosition = mBullet.transform.localPosition + vec3dir*10;
 
             //mBullet.transform.position = Vector3.MoveTowards(mBullet.transform.position, monster.transform.position, 7 * Time.deltaTime);
             yield return new WaitForSeconds(0.03f);
@@ -102,6 +102,6 @@ public class Tower : MonoBehaviour {
         mBullet.transform.SetParent(transform.parent);
         mBullet.transform.localScale = new Vector3(1, 1, 1);
         mBullet.transform.localPosition = transform.localPosition;
-        StartCoroutine(moveBullet(mBullet, monsters[target].transform.position));
+        StartCoroutine(moveBullet(mBullet, monsters[target].transform.localPosition));
     }
 }

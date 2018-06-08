@@ -26,7 +26,7 @@ namespace FK.StaticFunc
         }
         static IEnumerator CameraShake(float ShakeTime, float shakeAmount) //화면 흔들리는 효과
         {
-            Transform shakeCameraPos = GameObject.Find("Main Camera").transform;
+            Transform shakeCameraPos = GameObject.Find("Game").transform;
             Vector3 originalPos = shakeCameraPos.localPosition;
 
             while (ShakeTime > 0.0f)//흔들리는 시간

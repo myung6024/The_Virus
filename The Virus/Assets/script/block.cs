@@ -43,7 +43,7 @@ public class block : MonoBehaviour {
 
         }
 
-        if (collision.transform.tag == "side_block" && state ==3 && GameManager.main_block_state <= 2)
+        if (collision.transform.tag == "side_block" && state ==3 && GameManager.main_block_state == 1)
         {
             if (GameManager.main_block_state == 1)
             {
@@ -89,7 +89,7 @@ public class block : MonoBehaviour {
             }
         }
 
-        if (collision.transform.tag == "side_block" && state == 3 && GameManager.main_block_state <= 2)
+        if (collision.transform.tag == "side_block" && state == 3 && GameManager.main_block_state == 1)
         {
             if (GameManager.main_block_state == 1)
             {
