@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - uptille
+  - monster
+  - icebullet
+  - bullet
+  - tile
+  - lefttile
+  - BLOCK
+  - downtile
+  - righttile
+  - final
+  - bombbullet
+  - boom
   layers:
   - Default
   - TransparentFX
