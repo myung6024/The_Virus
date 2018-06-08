@@ -114,11 +114,11 @@ public class GameManager : MonoBehaviour {
     {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
-    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.tile_right, mapTile.tile, mapTile.tile, mapTile.tile_up, mapTile.tower2, mapTile.none},
     {mapTile.none, mapTile.tile, mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.tile_up, mapTile.tile, mapTile.tile, mapTile.tile_left, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none },
-    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
+    {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.tower3, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile, mapTile.none, mapTile.none},
     {mapTile.none, mapTile.none, mapTile.none, mapTile.none, mapTile.tile_start, mapTile.none, mapTile.none}};
 	// Use this for initialization
